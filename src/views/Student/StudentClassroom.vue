@@ -13,10 +13,13 @@
           </div>
         </div>
       </section>
-      <div class="container">
-        <StudentQuiz :quiz="quizes[quizIndex]" @answer="handleAnswer" />
+      <div class="container" v-if="quizzes != null && quizzes.length > 0">
+        <StudentQuiz :quiz="quizzes[quizIndex]" @answer="handleAnswer" :key="quizIndex" />
         <b-button icon-right="delete" @click="quizIndex = Math.max(0, quizIndex - 1)">Prev</b-button>
-        <b-button icon-right="delete" @click="quizIndex = Math.min(quizes.length - 1, quizIndex + 1)">Next</b-button>
+        <b-button icon-right="delete" @click="quizIndex = Math.min(quizzes.length - 1, quizIndex + 1)">Next</b-button>
+      </div>
+      <div class="container" v-else>
+        No Quizzes
       </div>
     </div>
     <div v-else-if="userType === 'teacher'">
@@ -26,30 +29,32 @@
 </template>
 
 <script>
+import { database } from '@/database'
 import StudentQuiz from '@/components/quiz/StudentQuiz'
 
 export default {
-  name: 'Classroom',
+  name: 'StudentClassroom',
   components: {
     StudentQuiz
   },
+  mounted() {
+    // database.ref(`${this.classroomId}/quiz`).on('value', (snapshot) => {
+    //   this.quizzes = snapshot.val();
+    // });
+  },
   data() {
     return {
-      quizes: [
-        {
-          type: 'mc',
-          question: 'Some multiple choice question',
-          answers: ['Answer A', 'Answer B', 'Answer C', 'Answer D']
-        },
-        {
-          type: 'tf',
-          question: 'True False?'
-        }
+      quizIndex: 0,
+      quizzes: [
       ],
-      quizIndex: 0
+      myAnswers: [
+      ]
     }
   },
   computed: {
+    userId() {
+      return this.$store.getters.getUserId;
+    },
     userType() {
       return this.$store.getters.getUserType;
     },
@@ -59,7 +64,20 @@ export default {
   },
   methods: {
     handleAnswer(answer) {
-      alert(answer);
+      this.myAnswers[this.quizIndex] = answer;
+      database.ref(`${this.classroomId}/responses/${this.userId}`).update({
+        [this.quizIndex]: answer
+      });
+    }
+  },
+  watch: {
+    classroomId: {
+      immediate: true,
+      handler(id) {
+        database.ref(`${id}/quiz`).on('value', (snapshot) => {
+          this.quizzes = snapshot.val();
+        });
+      }
     }
   }
 }
