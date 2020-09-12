@@ -14,6 +14,7 @@ Vue.use(Buefy);
 Vue.use(firebase)
 Vue.use(firestorePlugin)
 
+
 new Vue({
   router,
   store,

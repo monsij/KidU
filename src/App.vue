@@ -20,7 +20,7 @@ export default {
         this.$router.push({ name: 'Dashboard' });
       } else {
         if (this.$store.getters.userId != '') {
-          this.$router.push({ name: 'Login' });
+          this.$router.push({ name: 'Home' });
           this.$store.commit('setUserId', '');
           this.$store.commit('setUserType', '');
         }
