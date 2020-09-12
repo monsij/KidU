@@ -44,7 +44,7 @@ export default {
     justify-content: space-evenly;
   }
 
-  .wrapper a {
+  .wrapper .classroom-link {
     display: flex;
     flex: 1 1 auto;
   }

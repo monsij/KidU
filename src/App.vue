@@ -9,8 +9,24 @@
 </template>
 
 <script>
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 export default {
-  name: 'App'
+  name: 'App',
+  created() {
+    // we may want to move this somewhere else, or use router guards
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$router.push({ name: 'Dashboard' });
+      } else {
+        if (this.$store.getters.userId != '') {
+          this.$router.push({ name: 'Login' });
+          this.$store.commit('setUserId', '');
+          this.$store.commit('setUserType', '');
+        }
+      }
+    })
+  }
 }
 </script>
 

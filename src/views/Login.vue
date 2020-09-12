@@ -16,13 +16,13 @@ export default {
   name: 'Login',
   created() {
     // May need to move somewhere else, as this will persist and keep firing multiple times on login/logout
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.$router.push({ name: 'Dashboard' });
-      } else {
-        this.$router.push('Login');
-      }
-    })
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user) {
+    //     this.$router.push({ name: 'Dashboard' });
+    //   } else {
+    //     this.$router.push('Login');
+    //   }
+    // })
   },
   methods: {
     login(type) {

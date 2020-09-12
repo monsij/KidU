@@ -4,10 +4,10 @@
       <img src="../assets/brand.png" width="156" height="63" />
     </template>
     <template slot="start">
-      <b-navbar-item href="/dashboard">
+      <b-navbar-item tag="router-link" :to="{ name: 'Dashboard' }">
         Dashboard
       </b-navbar-item>
-      <b-navbar-item href="/calendar">
+      <b-navbar-item tag="router-link" :to="{ name: 'Calendar' }">
         Calendar
       </b-navbar-item>
     </template>
