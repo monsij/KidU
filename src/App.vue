@@ -1,3 +1,4 @@
+
 <template>
   <div id="app">
     <!-- <div id="nav">
@@ -11,18 +12,22 @@
 <script>
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+/* eslint-disable no-unused-vars */
+import { firestore, database } from '@/database';
+
 export default {
   name: 'App',
   created() {
     // we may want to move this somewhere else, or use router guards
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.$store.commit('setUserId', user.uid);
         this.$router.push({ name: 'Dashboard' });
       } else {
         if (this.$store.getters.userId != '') {
-          this.$router.push({ name: 'Home' });
           this.$store.commit('setUserId', '');
           this.$store.commit('setUserType', '');
+          this.$router.push({ name: 'Home' });
         }
       }
     })
