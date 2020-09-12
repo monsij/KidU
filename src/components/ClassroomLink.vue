@@ -1,6 +1,6 @@
 <template>
   <div class="classroom-link">
-    <router-link :to="{ name: 'Classroom', params: { id: classroomId } }">
+    <router-link :to="{ name: 'Student Classroom', params: { id: classroomId } }">
       <div class="outline">
         <div class="class-thumbnail">
           <img v-if="image" v-bind:src="image" />

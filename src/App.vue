@@ -22,7 +22,12 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.commit('setUserId', user.uid);
-        this.$router.push({ name: 'Dashboard' });
+        console.log(this.$store.getters.getUserType);
+        if (this.$store.getters.getUserType === 'teacher') {
+          this.$router.push({ name: 'Teacher Dashboard' });
+        } else {
+          this.$router.push({ name: 'Student Dashboard'})
+        }
       } else {
         if (this.$store.getters.userId != '') {
           this.$store.commit('setUserId', '');

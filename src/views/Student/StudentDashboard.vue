@@ -3,7 +3,7 @@
     <p>
       You are {{ this.$store.getters.getUserType }}
     </p>
-    <div class="wrapper">
+    <div class="wrapper" v-if="studentInfo != undefined && studentInfo.classrooms.length > 0">
       <ClassroomLink
         v-for="(classroom, index) in studentInfo.classrooms"
         :key="index"
@@ -24,9 +24,12 @@ import { firestore } from '@/database';
 import ClassroomLink from '@/components/ClassroomLink';
 
 export default {
-  name: 'Dashboard',
+  name: 'StudentDashboard',
   components: {
     ClassroomLink
+  },
+  beforeMount() {
+    this.$bind('studentInfo', firestore.doc(`/students/${this.userId}`))
   },
   data() {
     return {
@@ -41,12 +44,12 @@ export default {
     }
   },
   watch: {
-    userId: {
-      immediate: true,
-      handler(userId) {
-        this.$bind('studentInfo', firestore.doc(`/students/${userId}`))
-      }
-    }
+    // userId: {
+    //   immediate: true,
+    //   handler(userId) {
+        // this.$bind('studentInfo', firestore.doc(`/students/${userId}`))
+    //   }
+    // }
   }
 }
 </script>
