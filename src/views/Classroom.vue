@@ -14,7 +14,7 @@
         </div>
       </section>
       <div class="container">
-        <StudentQuiz :quiz="quizes[quizIndex]" @answer="handleAnswer" />
+        <StudentQuiz :quiz="quizes[quizIndex]" @answer="handleAnswer" :key="quizIndex" />
         <b-button icon-right="delete" @click="quizIndex = Math.max(0, quizIndex - 1)">Prev</b-button>
         <b-button icon-right="delete" @click="quizIndex = Math.min(quizes.length - 1, quizIndex + 1)">Next</b-button>
       </div>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { database } from '@/database'
 import StudentQuiz from '@/components/quiz/StudentQuiz'
 
 export default {
@@ -35,21 +36,17 @@ export default {
   },
   data() {
     return {
+      quizIndex: 0,
       quizes: [
-        {
-          type: 'mc',
-          question: 'Some multiple choice question',
-          answers: ['Answer A', 'Answer B', 'Answer C', 'Answer D']
-        },
-        {
-          type: 'tf',
-          question: 'True False?'
-        }
       ],
-      quizIndex: 0
+      myAnswers: [
+      ]
     }
   },
   computed: {
+    userId() {
+      return this.$store.getters.getUserId;
+    },
     userType() {
       return this.$store.getters.getUserType;
     },
@@ -59,7 +56,20 @@ export default {
   },
   methods: {
     handleAnswer(answer) {
-      alert(answer);
+      this.myAnswers[this.quizIndex] = answer;
+      database.ref(`${this.classroomId}/responses/${this.userId}`).update({
+        [this.quizIndex]: answer
+      });
+    }
+  },
+  watch: {
+    classroomId: {
+      immediate: true,
+      handler(id) {
+        database.ref(`${id}/quiz`).on('value', (snapshot) => {
+          this.quizes = snapshot.val();
+        });
+      }
     }
   }
 }

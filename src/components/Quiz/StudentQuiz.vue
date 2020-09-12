@@ -8,7 +8,7 @@
       <b-button class="">Mic</b-button>
     </div>
     <div class="answers-wrapper">
-      <div class="answers" v-show="quiz.type === 'mc'">
+      <div class="answers" v-if="quiz.type === 'mc'">
         <b-button
           v-for="(answer, index) in quiz.answers"
           :key="index"
@@ -19,7 +19,7 @@
           {{ mcLabel[index] }} {{ answer }}
         </b-button>
       </div>
-      <div class="answers" v-show="quiz.type === 'tf'">
+      <div class="answers" v-else-if="quiz.type === 'tf'">
         <b-button
           @click="sendAnswer(true, 0)"
           :type="selectedIndex === 0 ? 'is-primary' : ''"
