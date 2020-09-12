@@ -30,18 +30,19 @@ const routes = [
     component: () => import('../views/MainApp.vue'),
     children: [
       {
-        path: '/dashboard',
+        path: 'dashboard',
         name: 'Dashboard',
         component: () => import('../views/Dashboard.vue')
       },
       {
-        path: '/classroom/:id',
+        path: 'classroom/:id',
         name: 'Classroom',
         component: () => import('../views/Classroom.vue')
       },
       {
-        path: '/calendar',
-        name: 'Calendar'
+        path: 'calendar',
+        name: 'Calendar',
+        component: () => import('../views/Calendar.vue')
       }
     ]
   },
