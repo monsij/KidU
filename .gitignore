@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-
+serviceAccountKey.json
+firebase.json
 
 # local env files
 .env.local
