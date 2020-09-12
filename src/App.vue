@@ -2,11 +2,30 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/login">Login</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
+export default {
+  name: 'App',
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$router.push('About');
+      } else {
+        this.$router.push('Home');
+      }
+    })
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

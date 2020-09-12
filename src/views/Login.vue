@@ -1,10 +1,9 @@
 <template>
   <div class="home">
     <img alt="Main logo" src="../assets/brand.png">
-    <Login msg="Hi, enter your credentials to get started"/>
     <button @click="login">Login</button>
     <br />
-    <button @click="register">Register</button>
+    <!-- <button @click="register">Register</button> -->
     <br />
   </div>
 </template>
@@ -14,21 +13,13 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
 // @ is an alias to /src
+// const provider = new firebase.auth.GoogleAuthProvider();
 
 export default {
   name: 'Login',
-  components: {
-  },
-  data() {
-    return {
-      provider: new firebase.auth.GoogleAuthProvider()
-    }
-  },
-  created() {
-    // this.provider = new firebase.auth.GoogleAuthProvider();
-  },
   methods: {
     login() {
+      const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         var token = result.credential.accessToken;
