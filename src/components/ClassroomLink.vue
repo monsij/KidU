@@ -1,8 +1,12 @@
 <template>
-  <router-link :to="{ name: 'Classroom', params: { id: classroomId } }">
-    <div class="classroom-link">
-      <span>{{ name }}</span>
-      <img v-if="image" src="image" />
+  <router-link :to="{ name: 'Classroom', params: { id: classroomId} }">
+    
+    <div class="outline">
+    <!--<span>{{ name }}</span>     name shown on thumbnail--> 
+    <div class="class-thumbnail">
+      <img v-if="image" v-bind:src="image" />
+      <img v-if="!image" src= "../assets/default_class_banner.png"/>
+    </div>
     </div>
   </router-link>
 </template>
@@ -23,6 +27,7 @@ export default {
       required: true
     }
   }
+  
 }
 </script>
 
@@ -30,10 +35,11 @@ export default {
   a {
     justify-content: center;
   }
-  .classroom-link {
-    background-image: url('../assets/output-onlinepngtools_10.png');
+  .outline{
+  }
+  .class-thumbnail {
     background-size: cover;
     width: 276px; /* 92px */
-    height: 201px; /* 67px */
+    height: 201px; /* 67px */ 
   }
 </style>

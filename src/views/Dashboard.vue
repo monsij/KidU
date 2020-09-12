@@ -10,6 +10,7 @@
         :key="index"
         :name="classroom.name"
         :classroomId="classroom.classroomId"
+        :image="classroom.image"
       />
     </div>
   </div>
@@ -26,9 +27,9 @@ export default {
   data() {
     return {
       classrooms: [
-        { name: '5th Grade Math', classroomId: '10' },
-        { name: '3rd Grade Reading', classroomId: '255' },
-        { name: '4th Grade Science', classroomId: '1111' }
+        { name: '5th Grade Math', classroomId: '10', image: require("../assets/5_maths.png") },
+        { name: '3rd Grade Reading', classroomId: '255', image: require("../assets/3_reading.png") },
+        { name: '4th Grade Science', classroomId: '1111', image: require("../assets/4_science.png")}
       ]
     }
   }
