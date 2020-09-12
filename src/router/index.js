@@ -26,7 +26,7 @@ const routes = [
   },
   {
     path: '/app',
-    name: 'Main App',
+    name: 'MainApp',
     component: () => import('../views/MainApp.vue'),
     children: [
       {
