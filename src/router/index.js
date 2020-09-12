@@ -30,8 +30,9 @@ const routes = [
     component: () => import('../views/Dashboard.vue')
   },
   {
-    path: '/classroom',
-    name: 'Classroom'
+    path: '/classroom/:id',
+    name: 'Classroom',
+    component: () => import('../views/Classroom.vue')
   },
   {
     path: '/calendar',
