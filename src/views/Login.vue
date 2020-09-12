@@ -3,8 +3,6 @@
     <img alt="Main logo" src="../assets/brand.png">
     <button @click="login">Login</button>
     <br />
-    <!-- <button @click="register">Register</button> -->
-    <br />
   </div>
 </template>
 
@@ -12,21 +10,29 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
-// @ is an alias to /src
-// const provider = new firebase.auth.GoogleAuthProvider();
-
 export default {
   name: 'Login',
+  created() {
+    // May need to move somewhere else, as this will persist and keep firing multiple times on login/logout
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$router.push('Dashboard');
+      } else {
+        this.$router.push('Login');
+      }
+    })
+  },
   methods: {
     login() {
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider).then(function(result) {
+      firebase.auth().signInWithPopup(provider).then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         var token = result.credential.accessToken;
         console.log(token);
         // The signed-in user info.
         var user = result.user;
         console.log(user);
+        this.$store.commit('setUserId', user.uid);
         // ...
       }).catch(function(error) {
         // Handle Errors here.
