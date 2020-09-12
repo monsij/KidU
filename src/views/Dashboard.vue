@@ -1,5 +1,9 @@
 <template>
   <div>
+    <p>
+      {{ this.$store.getters.getUserId }}
+      You are {{ this.$store.getters.getUserType }}
+    </p>
     <button @click="logout">Logout</button>
   </div>
 </template>

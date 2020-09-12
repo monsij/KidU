@@ -1,8 +1,10 @@
 <template>
   <div class="home">
     <img alt="Main logo" src="../assets/brand.png">
-    <button @click="login">Login</button>
     <br />
+    <button @click="login('student')">Student Login</button>
+    <br />
+    <button @click="login('teacher')">Teacher Login</button>
   </div>
 </template>
 
@@ -23,7 +25,7 @@ export default {
     })
   },
   methods: {
-    login() {
+    login(type) {
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -33,6 +35,7 @@ export default {
         var user = result.user;
         console.log(user);
         this.$store.commit('setUserId', user.uid);
+        this.$store.commit('setUserType', type);
         // ...
       }).catch(function(error) {
         // Handle Errors here.
