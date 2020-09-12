@@ -18,7 +18,7 @@ export default {
     // May need to move somewhere else, as this will persist and keep firing multiple times on login/logout
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.$router.push('Dashboard');
+        this.$router.push({ name: 'Dashboard' });
       } else {
         this.$router.push('Login');
       }

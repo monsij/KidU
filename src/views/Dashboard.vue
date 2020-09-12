@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar />
     <p>
       {{ this.$store.getters.getUserId }}
       You are {{ this.$store.getters.getUserType }}
@@ -17,13 +16,11 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar';
 import ClassroomLink from '@/components/ClassroomLink';
 
 export default {
   name: 'Dashboard',
   components: {
-    Navbar,
     ClassroomLink
   },
   data() {

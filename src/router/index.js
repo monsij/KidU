@@ -25,19 +25,26 @@ const routes = [
     component: Login
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue')
+    path: '/app',
+    name: 'Main App',
+    component: () => import('../views/MainApp.vue'),
+    children: [
+      {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import('../views/Dashboard.vue')
+      },
+      {
+        path: '/classroom/:id',
+        name: 'Classroom',
+        component: () => import('../views/Classroom.vue')
+      },
+      {
+        path: '/calendar',
+        name: 'Calendar'
+      }
+    ]
   },
-  {
-    path: '/classroom/:id',
-    name: 'Classroom',
-    component: () => import('../views/Classroom.vue')
-  },
-  {
-    path: '/calendar',
-    name: 'Calendar'
-  }
 ]
 
 const router = new VueRouter({
