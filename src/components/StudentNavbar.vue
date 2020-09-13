@@ -28,6 +28,15 @@ export default {
   methods: {
     logout() {
       firebase.auth().signOut();
+      this.$fire({
+          title: "Success",
+          text: "Logged Out",
+          type: "success",
+          timer: 2000
+          }).then(()=>{
+            //console.log(this.$store.getters.getDisplayName);
+            //console.log(this.$store.getters.getDisplayName);
+          });
     }
   }
 }

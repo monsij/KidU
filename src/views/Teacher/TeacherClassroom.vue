@@ -76,8 +76,8 @@
 
 <script>
 import { database, firestore } from '@/database'
-import QuizEditor from '@/components/quiz/QuizEditor'
-import QuizResults from '@/components/quiz/QuizResults'
+import QuizEditor from '@/components/Quiz/QuizEditor'
+import QuizResults from '@/components/Quiz/QuizResults'
 
 export default {
   name: 'TeacherClassroom',

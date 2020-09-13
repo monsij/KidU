@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Hello, {{ this.$store.getters.getDisplayName }}  </h2>
     <div class="wrapper" v-if="studentInfo != undefined && studentInfo.classrooms.length > 0">
       <ClassroomLink
         v-for="(classroom, index) in studentInfo.classrooms"

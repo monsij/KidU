@@ -12,7 +12,9 @@ const store = new Vuex.Store({
   state: {
     user: {
       uid: '',
-      type: ''
+      type: '',
+      displayName: '',
+      emailID: ''
     }
   },
   mutations: {
@@ -21,6 +23,12 @@ const store = new Vuex.Store({
     },
     setUserType(state, type) {
       state.user.type = type
+    },
+    setDisplayName(state, displayName) {
+      state.user.displayName = displayName
+    },
+    setEmailID(state, emailID) {
+      state.user.emailID = emailID
     }
   },
   actions: {
@@ -36,6 +44,12 @@ const store = new Vuex.Store({
     },
     getUserType(state) {
       return state.user.type;
+    },
+    getDisplayName(state) {
+      return state.user.displayName;
+    },
+    getEmailID(state) {
+      return state.user.emailID;
     }
   }
 })
