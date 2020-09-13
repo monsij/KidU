@@ -13,9 +13,7 @@
       </div>
     </section>
     <div class="container" v-if="false">
-      <StudentQuiz :quiz="quizzes[quizIndex]" @answer="handleAnswer" :key="quizIndex" />
-      <b-button icon-right="delete" @click="quizIndex = Math.max(0, quizIndex - 1)">Prev</b-button>
-      <b-button icon-right="delete" @click="quizIndex = Math.min(quizzes.length - 1, quizIndex + 1)">Next</b-button>
+      <QuizResults :quiz="activeQuiz" :responses="quizResponses" :roster="roster" />
     </div>
     <div class="container" v-else>
       <h1>How would you like to poll your class?</h1>
@@ -52,21 +50,33 @@
 </template>
 
 <script>
-import { database } from '@/database'
-import StudentQuiz from '@/components/quiz/StudentQuiz'
+import { database, firestore } from '@/database'
 import QuizEditor from '@/components/quiz/QuizEditor'
+import QuizResults from '@/components/quiz/QuizResults'
 
 export default {
   name: 'TeacherClassroom',
   components: {
-    StudentQuiz,
-    QuizEditor
+    QuizEditor,
+    QuizResults
+  },
+  mounted() {
+    firestore.doc(`/teachers/${this.userId}/classrooms/${this.classroomId}`).get().then((snapshot) => {
+      let roster = snapshot.data().roster;
+      roster.forEach((studentId) => {
+        firestore.doc(`/students/${studentId}`).get().then((snap) => {
+          this.roster[studentId] = snap.data().name;
+        });
+      });
+    })
+    database.ref(`${this.classroomId}/quiz`).once('value').then((snapshot) => {
+      this.activeQuiz = snapshot.val();
+    });
+    
   },
   data() {
     return {
-      activeQuiz: {
-
-      },
+      activeQuiz: [],
       queuedQuizzes: [
         {
           quizName: 'Quiz 2',
@@ -89,7 +99,8 @@ export default {
         }
       ],
       createQuizModal: false,
-      wantToQueue: false
+      wantToQueue: false,
+      roster: {}
     }
   },
   computed: {
@@ -101,11 +112,19 @@ export default {
     },
     classroomId() {
       return this.$route.params.id
+    },
+    quizResponses() {
+      let responses = {}
+      database.ref(`${this.classroomId}/responses`).on('value', (snapshot) => {
+        responses = snapshot.val();
+      });
+      return responses;
     }
   },
   methods: {
     postQuiz(quiz) {
       database.ref(`${this.classroomId}/quiz`).set(quiz);
+      this.activeQuiz = quiz;
     },
     closeQuiz() {
 

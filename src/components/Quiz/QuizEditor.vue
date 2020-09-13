@@ -30,7 +30,7 @@
             :key="i"
             class="answer-option"
           >
-            <b-radio v-model="question.correctAnswer" :native-value="i" />
+            <b-radio v-model="question.correctAnswer" :native-value="answer" />
             <b-input
               v-model="question.answers[i]"
               :placeholder="'Answer Choice ' + (i + 1)"
@@ -38,9 +38,11 @@
           </div>
         </div>
         <div class="answers" v-else-if="question.type === 'tf'">
+          <b-radio v-model="question.correctAnswer" :native-value="true" />
           <div>
             True
           </div>
+          <b-radio v-model="question.correctAnswer" :native-value="false" />
           <div>
             False
           </div>
@@ -75,7 +77,7 @@ export default {
           type: 'mc',
           question: '',
           answers: ['', '', '', ''],
-          correctAnswer: 0
+          correctAnswer: ''
         }
       ]
     }
@@ -86,7 +88,7 @@ export default {
         type: 'mc',
         question: '',
         answers: ['', '', '', ''],
-        correctAnswer: 0
+        correctAnswer: ''
       });
     },
     removeQuestion(index) {

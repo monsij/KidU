@@ -1,8 +1,5 @@
 <template>
   <div>
-    <p>
-      You are {{ this.$store.getters.getUserType }}
-    </p>
     <div class="wrapper" v-if="studentInfo != undefined && studentInfo.classrooms.length > 0">
       <ClassroomLink
         v-for="(classroom, index) in studentInfo.classrooms"
@@ -43,14 +40,6 @@ export default {
     userId() {
       return this.$store.getters.getUserId;
     }
-  },
-  watch: {
-    // userId: {
-    //   immediate: true,
-    //   handler(userId) {
-        // this.$bind('studentInfo', firestore.doc(`/students/${userId}`))
-    //   }
-    // }
   }
 }
 </script>
@@ -64,12 +53,17 @@ export default {
     .classroom-link {
       display: flex;
       flex: 1 1 auto;
+      padding: 50px 20px;
     }
     .join-class {
       display: flex;
       flex: 1 1 auto;
       align-items: center;
       justify-content: center;
+      button {
+        font-family: 'Coming Soon', cursive;
+        font-size: 40px;
+      }
     }
   }
 </style>
