@@ -25,7 +25,7 @@ import { firestore } from '@/database';
 import ClassroomLink from '@/components/ClassroomLink';
 
 export default {
-  name: 'StudentDashboard',
+  name: 'TeacherDashboard',
   components: {
     ClassroomLink
   },
