@@ -1,35 +1,42 @@
 <template>
   <div class="home">
+    <!--
     <b-navbar centered>
       <template slot="brand">
         <img src="../assets/brand.png" width="156" height="63" />
       </template>
     </b-navbar>
+    -->
     <div class="login-main">
       <div class="login-inner">
-        <div style="padding-bottom: 40px">
+        <div style="padding-bottom: 10px">
+          <div class="brand-bg">
+          <img src="../assets/brand_transp.png" width="400" height="63" />
+          </div>
+          <br>
           <b-icon class="far fa-clock"></b-icon>
           <span style="padding: 0 100px">Time for class!</span>
           <b-icon class="far fa-clock"></b-icon>
         </div>
+
         <b-button
           @click="login('student')"
           icon-left="google"
           size="is-large"
-          type="is-info is-light"
+          type="is-info is-dark"
           class="login-button"
         >
-          Student Login (Google)
+          Student Login
         </b-button>
         <br />
         <b-button
           @click="login('teacher')"
           icon-left="google"
           size="is-large"
-          type="is-info is-light"
+          type="is-info is-dark"
           class="login-button"
         >
-          Teacher Login (Google)
+          Teacher Login
         </b-button>
       </div>
     </div>
@@ -54,6 +61,16 @@ export default {
         console.log(user);
         this.$store.commit('setUserId', user.uid);
         this.$store.commit('setUserType', type);
+        this.getProfileInfo();
+        this.$fire({
+          title: "Success",
+          text: "Signed in using: ".concat(this.$store.getters.getEmailID),
+          type: "success",
+          timer: 3000
+          }).then(()=>{
+            //console.log(this.$store.getters.getDisplayName);
+            //console.log(this.$store.getters.getDisplayName);
+          });
         // ...
       }).catch(function(error) {
         // Handle Errors here.
@@ -69,6 +86,34 @@ export default {
         console.log(credential);
         // ...
       });
+    },
+    getProfileInfo() {
+      var user = firebase.auth().currentUser;
+      var name, email;
+      //var photoUrl, uid, emailVerified;
+
+      if(user!=null) {
+        name = user.displayName;
+        //console.log(name);
+        
+        email = user.email;
+        //console.log(email);
+
+        //photoUrl = user.photoURL;
+        //console.log(photoUrl);
+        
+        //emailVerified = user.emailVerified;
+        //console.log(emailVerified);
+
+        //uid = user.uid;
+        //console.log(uid); 
+        
+        // Storing profile information for later use
+        this.$store.commit('setDisplayName',name);
+        this.$store.commit('setEmailID',email);
+
+        
+      }
     }
   }
 }
@@ -94,10 +139,18 @@ export default {
   padding: 90px 0;
 }
 
+.brand-bg {
+  background:#000;
+  max-width: 20vw;
+  margin: 0 auto;
+}
+
 .login-button {
   border: 2px solid #4285F4;
   span {
     background: #4285F4;
   }
+
+
 }
 </style>

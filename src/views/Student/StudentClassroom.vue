@@ -24,7 +24,7 @@
 
 <script>
 import { database } from '@/database'
-import StudentQuiz from '@/components/quiz/StudentQuiz'
+import StudentQuiz from '@/components/Quiz/StudentQuiz'
 
 export default {
   name: 'StudentClassroom',

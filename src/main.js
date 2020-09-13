@@ -6,13 +6,15 @@ import firebase from 'firebase';
 import { firestorePlugin } from 'vuefire';
 import Buefy from 'buefy';
 import 'buefy/dist/buefy.css';
+import VueSimpleAlert from 'vue-simple-alert';
 
 
 Vue.config.productionTip = false
 
 Vue.use(Buefy);
-Vue.use(firebase)
-Vue.use(firestorePlugin)
+Vue.use(firebase);
+Vue.use(firestorePlugin);
+Vue.use(VueSimpleAlert);
 
 
 new Vue({
