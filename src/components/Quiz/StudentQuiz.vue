@@ -5,7 +5,7 @@
         {{ quiz.question }}
       </div>
       <b-button class="">Raise Hand</b-button>
-      <b-button class="">Mic</b-button>
+      <b-button class="">Text-to-Speech</b-button>
     </div>
     <div class="answers-wrapper">
       <div class="answers" v-if="quiz.type === 'mc'">
@@ -64,15 +64,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+* {
+  font-family: 'Coming Soon', cursive;
+}
 .question-wrapper {
   display: grid;
   grid-template-columns: 5fr 1fr;
   grid-template-rows: 1fr 1fr;
   .question {
+    font-size: 50px;
+    padding: 50px;
     grid-row-start: 1;
     grid-row-end: 3;
     background: pink;
     border: 2px solid black;
+  }
+  button {
+    height: 100%;
   }
 }
 .answers {
@@ -80,6 +88,7 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   button {
+    font-size: 50px;
     padding: 50px;
   }
 }

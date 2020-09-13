@@ -7,17 +7,16 @@
             Welcome to {{'[teacher]'}}'s Classroom
           </h1>
           <h2 class="subtitle">
-            {{ classroomId }}
+            <!-- {{ classroomId }} -->
           </h2>
         </div>
       </div>
     </section>
     <div class="container" v-if="quizzes != null && quizzes.length > 0">
       <StudentQuiz :quiz="quizzes[quizIndex]" @answer="handleAnswer" :key="quizIndex" />
-      <b-button icon-right="delete" @click="quizIndex = Math.max(0, quizIndex - 1)">Prev</b-button>
-      <b-button icon-right="delete" @click="quizIndex = Math.min(quizzes.length - 1, quizIndex + 1)">Next</b-button>
+      <b-numberinput v-model="quizIndex" placeholder="0" :min="0" :max="quizzes.length - 1" size="is-medium"></b-numberinput>
     </div>
-    <div class="container" v-else>
+    <div class="container no-quiz" v-else>
       No Quizzes
     </div>
   </div>
@@ -31,11 +30,6 @@ export default {
   name: 'StudentClassroom',
   components: {
     StudentQuiz
-  },
-  mounted() {
-    // database.ref(`${this.classroomId}/quiz`).on('value', (snapshot) => {
-    //   this.quizzes = snapshot.val();
-    // });
   },
   data() {
     return {
@@ -81,7 +75,16 @@ export default {
 <style scoped>
 .classroom-wrapper {
   background: #89CFF0;
-  /* height: 200vh; */
+  height: 100vh;
   width: 100%
+}
+.title {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 60px;
+}
+
+.no-quiz {
+  font-family: 'Coming Soon', cursive;
+  font-size: 50px;
 }
 </style>

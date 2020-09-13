@@ -63,6 +63,10 @@ export default {
     right: 0;
     color: black;
     height: 100%;
+    font-family: 'Coming Soon', cursive;
+    color: white;
+    font-weight: bold;
+    font-size: 40px;
   }
   .class-thumbnail {
     background-size: cover;
