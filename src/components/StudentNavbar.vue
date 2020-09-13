@@ -1,5 +1,5 @@
 <template>
-  <b-navbar>
+  <b-navbar fixed-top>
     <template slot="brand">
       <img src="../assets/brand.png" width="156" height="63" />
     </template>
@@ -7,9 +7,9 @@
       <b-navbar-item tag="router-link" :to="{ name: 'Student Dashboard' }">
         Dashboard
       </b-navbar-item>
-      <b-navbar-item tag="router-link" :to="{ name: 'Calendar' }">
+      <!-- <b-navbar-item tag="router-link" :to="{ name: 'Calendar' }">
         Calendar
-      </b-navbar-item>
+      </b-navbar-item> -->
     </template>
     <template slot="end">
       <b-navbar-item tag="div">

@@ -7,7 +7,7 @@
             Your Classroom
           </h1>
           <h2 class="subtitle">
-            {{ classroomId }}
+            <!-- {{ classroomId }} -->
           </h2>
         </div>
       </div>
@@ -16,30 +16,51 @@
       <QuizResults :quiz="activeQuiz" :responses="quizResponses" :roster="roster" />
     </div>
     <div class="container" v-else>
-      <h1>How would you like to poll your class?</h1>
-      <b-button @click="queueQuiz">
-        Pre-fill the question bank
-      </b-button>
-      <b-button @click="createQuiz">
-        Type Questions On-the-Fly
-      </b-button>
-      <b-button @click="postQuiz(testQuiz)">
-        Post Test Quiz
-      </b-button>
+      <h3>How would you like to poll your class?</h3>
+      <div class="poll-options">
+        <b-button @click="queueQuiz">
+          Pre-fill the question bank
+        </b-button>
+        <b-button @click="createQuiz">
+          Type Questions On-the-Fly
+        </b-button>
+        <b-button @click="postQuiz(testQuiz)">
+          Post Test Quiz
+        </b-button>
+      </div>
       <div>
-        <div 
+        <h3>Quiz Queue</h3>
+        <div class="queue-wrapper">
+          <div 
           class="card"
           v-for="(quiz, index) in queuedQuizzes"
           :key="index"
         >
           <div class="card-content">
-            <div class="content">
+            <div class="title">
               {{ quiz.quizName }}
+            </div>
+            <div class="subtitle">
+              {{ quiz.questions.length }} question(s)
             </div>
           </div>
           <footer class="card-footer">
-            <b-button @click="postQuiz(quiz.questions)">Post Quiz</b-button>
+            <b-button
+              @click="postQuiz(quiz.questions)"
+              type="is-success is-light"
+              class="card-footer-item"
+            >
+              Post Quiz
+            </b-button>
+            <b-button
+              @click="deleteQuiz(index)"
+              type="is-danger is-light"
+              class="card-footer-item"
+            >
+              Delete Quiz
+            </b-button>
           </footer>
+        </div>
         </div>
       </div>
     </div>
@@ -85,7 +106,17 @@ export default {
               type: 'mc',
               question: 'Choose the synonym of this word: beautiful',
               answers: ['ugly', 'smart', 'pretty', 'quiet'],
-              correctAnswer: 2
+              correctAnswer: 'pretty'
+            }
+          ]
+        },
+        {
+          quizName: 'Quiz 3',
+          questions: [
+            {
+              type: 'mc',
+              question: '534 rounded to the nearest ten is which number?',
+              answers: ['500', '530', '540', '600']
             }
           ]
         }
@@ -95,7 +126,7 @@ export default {
           type: 'mc',
           question: 'Choose the antonym of this word: wild',
           answers: ['tame', 'crazy', 'loud', 'aggressive'],
-          correctAnswer: 0
+          correctAnswer: 'tame'
         }
       ],
       createQuizModal: false,
@@ -126,8 +157,11 @@ export default {
       database.ref(`${this.classroomId}/quiz`).set(quiz);
       this.activeQuiz = quiz;
     },
+    deleteQuiz(index) {
+      this.queuedQuizzes.splice(index, 1);
+    },
     closeQuiz() {
-
+      this.activeQuiz = []
     },
     createQuiz() {
       this.createQuizModal = true;
@@ -145,16 +179,48 @@ export default {
       this.createQuizModal = false;
       this.wantToQueue = false;
     }
-  },
-  watch: {
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .classroom-wrapper {
   background: #89CFF0;
-  /* height: 200vh; */
-  width: 100%
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 5vh;
+}
+
+h3 {
+  font-family: 'Coming Soon', cursive;
+  font-size: 60px;
+}
+
+.poll-options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+  button {
+    margin: 5vmin 1vmin;
+    flex: 1 1 auto;
+    border: 5px solid purple;
+    border-radius: 0;
+    font-family: 'Coming Soon', cursive;
+    font-size: 50px;
+    max-width: 40vw;
+  }
+}
+
+.queue-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  .card {
+    flex: 1 1 auto;
+    max-width: 25%;
+  }
 }
 </style>

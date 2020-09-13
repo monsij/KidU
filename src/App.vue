@@ -32,7 +32,7 @@ export default {
         if (this.$store.getters.userId != '') {
           this.$store.commit('setUserId', '');
           this.$store.commit('setUserType', '');
-          this.$router.push({ name: 'Home' });
+          this.$router.push({ name: 'Login' });
         }
       }
     })

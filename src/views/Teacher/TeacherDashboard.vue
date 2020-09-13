@@ -1,8 +1,5 @@
 <template>
   <div>
-    <p>
-      You are {{ this.$store.getters.getUserType }}
-    </p>
     <div class="wrapper" v-if="classrooms.length > 0">
       <ClassroomLink
         v-for="(classroom, index) in classrooms"

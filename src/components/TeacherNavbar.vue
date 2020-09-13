@@ -7,9 +7,9 @@
       <b-navbar-item tag="router-link" :to="{ name: 'Teacher Dashboard' }">
         Dashboard
       </b-navbar-item>
-      <b-navbar-item tag="router-link" :to="{ name: 'Calendar' }">
+      <!-- <b-navbar-item tag="router-link" :to="{ name: 'Calendar' }">
         Calendar
-      </b-navbar-item>
+      </b-navbar-item> -->
     </template>
     <template slot="end">
       <b-navbar-item tag="div">

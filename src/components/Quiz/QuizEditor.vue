@@ -16,12 +16,8 @@
         <option value="mc">Multiple Choice</option>
         <option value="tf">True / False</option>
       </b-select>
-      <div class="question-wrapper">
-        <div class="question">
-          <b-input v-model="question.question" placeholder="Your Question Here..."/>
-        </div>
-        <b-button class="">Raise Hand</b-button>
-        <b-button class="">Mic</b-button>
+      <div class="question">
+        <b-input v-model="question.question" placeholder="Your Question Here..."/>
       </div>
       <div class="answers-wrapper">
         <div class="answers" v-if="question.type === 'mc'">
@@ -38,13 +34,17 @@
           </div>
         </div>
         <div class="answers" v-else-if="question.type === 'tf'">
-          <b-radio v-model="question.correctAnswer" :native-value="true" />
-          <div>
-            True
+          <div class="answer-option">
+            <b-radio v-model="question.correctAnswer" :native-value="true" />
+            <div>
+              True
+            </div>
           </div>
-          <b-radio v-model="question.correctAnswer" :native-value="false" />
-          <div>
-            False
+          <div class="answer-option">
+            <b-radio v-model="question.correctAnswer" :native-value="false" />
+            <div>
+              False
+            </div>
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default {
           type: 'mc',
           question: '',
           answers: ['', '', '', ''],
-          correctAnswer: ''
+          correctAnswer: ' '
         }
       ]
     }

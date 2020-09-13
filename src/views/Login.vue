@@ -1,10 +1,38 @@
 <template>
   <div class="home">
-    <img alt="Main logo" src="../assets/brand.png">
-    <br />
-    <button @click="login('student')">Student Login</button>
-    <br />
-    <button @click="login('teacher')">Teacher Login</button>
+    <b-navbar centered>
+      <template slot="brand">
+        <img src="../assets/brand.png" width="156" height="63" />
+      </template>
+    </b-navbar>
+    <div class="login-main">
+      <div class="login-inner">
+        <div style="padding-bottom: 40px">
+          <b-icon class="far fa-clock"></b-icon>
+          <span style="padding: 0 100px">Time for class!</span>
+          <b-icon class="far fa-clock"></b-icon>
+        </div>
+        <b-button
+          @click="login('student')"
+          icon-left="google"
+          size="is-large"
+          type="is-info is-light"
+          class="login-button"
+        >
+          Student Login (Google)
+        </b-button>
+        <br />
+        <b-button
+          @click="login('teacher')"
+          icon-left="google"
+          size="is-large"
+          type="is-info is-light"
+          class="login-button"
+        >
+          Teacher Login (Google)
+        </b-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,16 +42,6 @@ import 'firebase/auth';
 
 export default {
   name: 'Login',
-  created() {
-    // May need to move somewhere else, as this will persist and keep firing multiple times on login/logout
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if (user) {
-    //     this.$router.push({ name: 'Dashboard' });
-    //   } else {
-    //     this.$router.push('Login');
-    //   }
-    // })
-  },
   methods: {
     login(type) {
       const provider = new firebase.auth.GoogleAuthProvider();
@@ -56,3 +74,30 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.login-main {
+  background-image: url('../assets/login-main-bg.jpg');
+  background-size: cover;
+  background-position: 50%;
+  height: 100vh;
+  text-align: center;
+  padding-top: 5em;
+}
+
+.login-inner {
+  max-width: 60vw;
+  margin: 0 auto;
+  font-size: 60px;
+  border: 2px solid black;
+  background-image: url('../assets/login-inner-bg.png');
+  font-family: 'Amaranth', sans-serif;
+  padding: 90px 0;
+}
+
+.login-button {
+  border: 2px solid #4285F4;
+  span {
+    background: #4285F4;
+  }
+}
+</style>
