@@ -1,6 +1,6 @@
 <template>
   <div class="classroom-link">
-    <router-link :to="{ name: 'Student Classroom', params: { id: classroomId } }">
+    <router-link :to="to">
       <div class="outline">
         <div class="class-thumbnail">
           <img v-if="image" v-bind:src="image" />
@@ -28,6 +28,18 @@ export default {
     classroomId: {
       type: String,
       required: true
+    },
+    type: {
+      type: String,
+      default: 'student'
+    }
+  },
+  computed: {
+    to() {
+      if (this.type === 'teacher') {
+        return { name: 'Teacher Classroom', params: { id: this.classroomId } }
+      }
+      return { name: 'Student Classroom', params: { id: this.classroomId } }
     }
   }
 }

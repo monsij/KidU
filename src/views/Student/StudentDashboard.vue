@@ -9,6 +9,7 @@
         :key="index"
         :name="classroom.name"
         :classroomId="classroom.id"
+        type="student"
       />
       <div class="join-class">
         <b-button>

@@ -1,29 +1,24 @@
 <template>
   <div class="classroom-wrapper">
-    <div v-if="userType === 'student'">
-      <section class="hero">
-        <div class="hero-body">
-          <div class="container">
-            <h1 class="title">
-              Welcome to {{'[teacher]'}}'s Classroom
-            </h1>
-            <h2 class="subtitle">
-              {{ classroomId }}
-            </h2>
-          </div>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Welcome to {{'[teacher]'}}'s Classroom
+          </h1>
+          <h2 class="subtitle">
+            {{ classroomId }}
+          </h2>
         </div>
-      </section>
-      <div class="container" v-if="quizzes != null && quizzes.length > 0">
-        <StudentQuiz :quiz="quizzes[quizIndex]" @answer="handleAnswer" :key="quizIndex" />
-        <b-button icon-right="delete" @click="quizIndex = Math.max(0, quizIndex - 1)">Prev</b-button>
-        <b-button icon-right="delete" @click="quizIndex = Math.min(quizzes.length - 1, quizIndex + 1)">Next</b-button>
       </div>
-      <div class="container" v-else>
-        No Quizzes
-      </div>
+    </section>
+    <div class="container" v-if="quizzes != null && quizzes.length > 0">
+      <StudentQuiz :quiz="quizzes[quizIndex]" @answer="handleAnswer" :key="quizIndex" />
+      <b-button icon-right="delete" @click="quizIndex = Math.max(0, quizIndex - 1)">Prev</b-button>
+      <b-button icon-right="delete" @click="quizIndex = Math.min(quizzes.length - 1, quizIndex + 1)">Next</b-button>
     </div>
-    <div v-else-if="userType === 'teacher'">
-
+    <div class="container" v-else>
+      No Quizzes
     </div>
   </div>
 </template>
