@@ -19,34 +19,48 @@
     </div>
     <div class="container" v-else>
       <h1>How would you like to poll your class?</h1>
-      <b-button>
+      <b-button @click="queueQuiz">
         Pre-fill the question bank
       </b-button>
-      <b-button>
+      <b-button @click="createQuiz">
         Type Questions On-the-Fly
       </b-button>
       <b-button @click="postQuiz(testQuiz)">
-        Post
+        Post Test Quiz
       </b-button>
-
+      <div>
+        <div 
+          class="card"
+          v-for="(quiz, index) in queuedQuizzes"
+          :key="index"
+        >
+          <div class="card-content">
+            <div class="content">
+              {{ quiz.quizName }}
+            </div>
+          </div>
+          <footer class="card-footer">
+            <b-button @click="postQuiz(quiz.questions)">Post Quiz</b-button>
+          </footer>
+        </div>
+      </div>
     </div>
     <b-modal v-model="createQuizModal">
-      <TeacherQuiz />
+      <QuizEditor @saveQuiz="handleSaveQuiz" />
     </b-modal>
-    <b-button @click="createQuizModal = true">Show</b-button>
   </div>
 </template>
 
 <script>
 import { database } from '@/database'
 import StudentQuiz from '@/components/quiz/StudentQuiz'
-import TeacherQuiz from '@/components/quiz/TeacherQuiz'
+import QuizEditor from '@/components/quiz/QuizEditor'
 
 export default {
-  name: 'StudentClassroom',
+  name: 'TeacherClassroom',
   components: {
     StudentQuiz,
-    TeacherQuiz
+    QuizEditor
   },
   data() {
     return {
@@ -54,7 +68,17 @@ export default {
 
       },
       queuedQuizzes: [
-
+        {
+          quizName: 'Quiz 2',
+          questions: [
+            {
+              type: 'mc',
+              question: 'Choose the synonym of this word: beautiful',
+              answers: ['ugly', 'smart', 'pretty', 'quiet'],
+              correctAnswer: 2
+            }
+          ]
+        }
       ],
       testQuiz: [
         {
@@ -62,14 +86,10 @@ export default {
           question: 'Choose the antonym of this word: wild',
           answers: ['tame', 'crazy', 'loud', 'aggressive'],
           correctAnswer: 0
-        },
-        {
-          type: 'tf',
-          question: 'True or False?',
-          correctAnswer: 1
         }
       ],
-      createQuizModal: true
+      createQuizModal: false,
+      wantToQueue: false
     }
   },
   computed: {
@@ -90,22 +110,24 @@ export default {
     closeQuiz() {
 
     },
-    handleAnswer(answer) {
-      this.myAnswers[this.quizIndex] = answer;
-      database.ref(`${this.classroomId}/responses/${this.userId}`).update({
-        [this.quizIndex]: answer
-      });
+    createQuiz() {
+      this.createQuizModal = true;
+    },
+    queueQuiz() {
+      this.createQuizModal = true;
+      this.wantToQueue = true;
+    },
+    handleSaveQuiz(quiz) {
+      if (this.wantToQueue) {
+        this.queuedQuizzes.push(quiz);
+      } else {
+        this.postQuiz(quiz.questions);
+      }
+      this.createQuizModal = false;
+      this.wantToQueue = false;
     }
   },
   watch: {
-    classroomId: {
-      immediate: true,
-      handler(id) {
-        database.ref(`${id}/quiz`).on('value', (snapshot) => {
-          this.quizzes = snapshot.val();
-        });
-      }
-    }
   }
 }
 </script>
