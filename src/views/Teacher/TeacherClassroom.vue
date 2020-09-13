@@ -15,6 +15,10 @@
     <div class="container" v-if="false">
       <QuizResults :quiz="activeQuiz" :responses="quizResponses" :roster="roster" />
     </div>
+    <div class="container" v-else-if="activeQuiz.name != 'undefined'">
+      <QuizResults :quiz="activeQuiz" :responses="quizResponses" :roster="roster" />
+      {{ quizResponses }}
+    </div>
     <div class="container" v-else>
       <h3>How would you like to poll your class?</h3>
       <div class="poll-options">
@@ -116,7 +120,8 @@ export default {
             {
               type: 'mc',
               question: '534 rounded to the nearest ten is which number?',
-              answers: ['500', '530', '540', '600']
+              answers: ['500', '530', '540', '600'],
+              correctAnswer: '530'
             }
           ]
         }
@@ -131,7 +136,16 @@ export default {
       ],
       createQuizModal: false,
       wantToQueue: false,
-      roster: {}
+      roster: {
+        Q9U7SfGghfuMXd8WepnL: {
+          first:"Bob",
+          last:"Ross"
+        },
+        rpVBpm6fkqdmMlMkXgb0: {
+          first: "Fred",
+          last: "Rogers"
+        }
+      }
     }
   },
   computed: {
